@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0    
+    container_name: luca-mysql
+    expose:
+      - "3306"
+    networks: 
+      - internal
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+
+  webserver:
+    build:
+      context: ./python/venv
+      dockerfile: Dockerfile
+    container_name: luca-webserver
+    expose:
+      - "5500"
+    ports:
+      - "5500:5500" 
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+
