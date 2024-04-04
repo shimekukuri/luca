@@ -1,34 +1,45 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [question, setQuestion] = useState<string>("");
+  const [qHistory, setQHistory] = useState<[string, string][]>([]);
+
+
+  const sendRequest = async () => {
+    setQHistory((prev) => [...prev, ["q", question]]);
+    const response = await fetch('/chat', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user_input: question }),
+    });
+
+    const data = await response.json();
+
+    setQHistory((prev) => [...prev, ["a", data.response]]);
+
+    setQuestion(() => "");
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='p-4 flex justify-center items-center flex-1'>
+      <div className="mockup-window border bg-base-300 w-3/5 h-3/5 flex shadow-2xl">
+        <div className="px-4 py-16 bg-base-200 flex-1 flex flex-col overflow-y-scroll">
+          {qHistory.map(([type, text]) => {
+            return <div className={`${type === 'q' ? 'chat chat-start' : 'chat chat-end'}`}>
+              <div className='chat-bubble'>{text}</div>
+            </div>
+          })}
+        </div>
+        <h1>AI Chatbot</h1>
+        <div className="">
+          <input value={question} onChange={(e) => setQuestion(() => e.target.value)} />
+          <button className='btn btn-primary' onClick={() => sendRequest()}>Submit question</button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
