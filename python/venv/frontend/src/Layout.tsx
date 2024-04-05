@@ -4,6 +4,7 @@ import { themeChange } from 'theme-change'
 
 export default function Layout() {
 
+  //used for changing the theme from the theme change npm package
   useEffect(() => {
     themeChange(false)
   }, []);

@@ -32,7 +32,6 @@ def chat():
                 max_length=20,
                 num_return_sequences=1,
                 pad_token_id=tokenizer.eos_token_id,
-                temperature=0.1
             )
     generated_output = output[:, input_ids.shape[-1]:]
     response = tokenizer.decode(generated_output[0], skip_special_tokens=True)
