@@ -23,6 +23,8 @@ app.config['MYSQL_ROOT_PASSWORD'] = env_variables.get('MYSQL_ROOT_PASSWORD')
 
 db = MySQL(app)
 
+# Wait for DB to initailize to run migrations
+# Did this to remove the need for migration dependency
 time.sleep(10)
 
 
@@ -82,20 +84,18 @@ def create_tables():
         )
         """
 
-        # Execute SQL command
         cur.execute(create_table_session)
         cur.execute(create_table_question)
         cur.execute(create_table_answer)
 
-        # Commit changes
         mysql.connection.commit()
 
-        # Close cursor
         cur.close()
 
 
 create_tables()
 
+# initiallize model
 model_name = "gpt2"
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 model = GPT2LMHeadModel.from_pretrained(model_name)
@@ -131,10 +131,12 @@ def chat():
                 "INSERT INTO session (session_id) VALUES (%s)", (session_id,))
             mysql.connection.commit()
 
+        # Insert question into database with session_id as foreign key
         cur.execute("INSERT INTO question (session_id, question_text) VALUES (%s, %s)",
                     (session_id, user_input))
         mysql.connection.commit()
 
+        # Get AI generated response
         input_ids = tokenizer.encode(user_input, return_tensors="pt")
         with torch.no_grad():
             output = model.generate(
@@ -148,6 +150,7 @@ def chat():
         response = tokenizer.decode(
             generated_output[0], skip_special_tokens=True)
 
+        # Insert answer into database with session_id as foreign key
         cur.execute("INSERT INTO answer (session_id, answer_text) VALUES (%s, %s)",
                     (session_id, response))
         mysql.connection.commit()
@@ -159,6 +162,7 @@ def chat():
     return jsonify({'error': 'Invalid request method'}), 405
 
 
+# Get sessions chat logs
 @app.route('/session', methods=['POST'])
 def handle_session():
     if request.method == 'POST':
@@ -256,7 +260,6 @@ def serve_static(filename):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    # Return index.html for any route
     return send_from_directory('dist', 'index.html')
 
 
