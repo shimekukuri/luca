@@ -32,9 +32,9 @@ export default function SessionLog() {
 
   return <div className="flex-1 justify-center items-center flex gap-4 flex-col">
     {data.length ? data.map(({ question_text, answer_text }) => {
-      return <div className="rounded-2xl shadow-2xl bg-primary-content p-4">
-        <div className="text-secondary-content-content">Question: {question_text}</div>
-        <div>Answer: {answer_text}</div>
+      return <div className="rounded-2xl shadow-2xl bg-secondary p-4">
+        <div className="">Question: {question_text}</div>
+        <div className="">Answer: {answer_text}</div>
       </div>
     }) : ''}
   </div>

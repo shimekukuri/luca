@@ -18,6 +18,6 @@ export default function SessionPicker() {
   console.log("loader data: ", data);
 
   return (<div className="flex-1 flex justify-center items-center flex-wrap gap-4">
-    {data.map((x) => <Link to={`/session/${x[0]}`} className="aspect-square bg-secondary-content">{x[0]}</Link>)}
+    {data.map((x) => <Link to={`/session/${x[0]}`} className="aspect-square bg-secondary rounded-2xl shadow-2xl p-2 flex justify-center items-center">Click to view: <br />{x[0]}</Link>)}
   </div>);
 }
