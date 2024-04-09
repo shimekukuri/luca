@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { useEffect } from 'react'
 import { themeChange } from 'theme-change'
+import { Link } from "react-router-dom";
 
 export default function Layout() {
 
@@ -12,7 +13,10 @@ export default function Layout() {
   return (
     <div className="bg-secondary flex flex-col min-h-screen">
       <div className="sticky top-0 left-0 right-0 h-16 bg-primary flex items-center p-4 justify-between">
-        <div>Nav</div>
+        <div className="px-4 flex gap-4">
+          <Link to={'/'} className="btn btn-secondary">Home</Link>
+          <Link to={'/session'} className="btn btn-secondary">Session Logs</Link>
+        </div>
         <div className="flex gap-4 items-center">
           <div>Theme:</div>
           <select data-choose-theme className="select select-primary">

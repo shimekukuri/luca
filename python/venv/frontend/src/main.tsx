@@ -7,8 +7,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from './error.tsx';
-import SessionLog from './routes/sessionlog/SessionLog.tsx';
 import Layout from './Layout.tsx';
+import SessionPicker, { SessionLoader } from './routes/sessionpicker/SessionLog.tsx';
+import SessionLog, { SessionLogLoader } from './routes/sessionlog/SessionLogger.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,13 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "sessionlog:sessionId",
+        path: "session",
+        loader: SessionLoader,
+        element: <SessionPicker />
+      },
+      {
+        path: "session/:session_id",
+        loader: SessionLogLoader,
         element: <SessionLog />
       }
     ]
