@@ -10,7 +10,7 @@
 
 ## About
 
-This project was produced for a take home exercise. The project is built with Docker, Python, Flask, Pytorch, Vite, React, and a touch of rust to use SQLX for migrations.
+This project was produced for a take home exercise. The project is built with Docker, Python, Flask, Pytorch, Vite, React.
 
 ## Getting Started
 
@@ -23,8 +23,6 @@ Docker
 ### Installation
 
 clone the repo, go to the main directory and input the command docker compose up --build. Usually takes around 10 minutes to build on modern hardware.
-
-Alternatively there are prebuilt docker images available.
 
 ### Usage
 
