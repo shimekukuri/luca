@@ -14,7 +14,7 @@ This project was produced for a take home exercise. The project is built with Do
 
 ## Getting Started
 
-To start the project clone the repo and tranverse the main directory and use docker compose up --build. It should fully build the project, on my M1 Mac it usually takes around 10 minutes to install all dependencies, and boot up the server running on localhost:5500. You should know the project is ready from when the command line emits this message: "spawned uWSGI master process (pid: 1)", there are also pre built docker images available.
+To start the project clone the repo and traverse the main directory and use docker compose up --build. It should fully build the project, on my M1 Mac it usually takes around 10 minutes to install all dependencies, and boot up the server running on localhost:5500. You should know the project is ready from when the command line emits this message: "spawned uWSGI master process (pid: 1)", 
 
 ### Prerequisites
 
